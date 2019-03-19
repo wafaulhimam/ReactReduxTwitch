@@ -16,6 +16,9 @@ import Streams from './components/containers/Streams';
 import {applyMiddleware, createStore} from 'redux';
 import logger from 'redux-logger';
 
+// Import Redux Thunk 
+import thunk from 'redux-thunk';
+
 //top level of React component hierarchy
 class App extends React.Component {
   render() {
@@ -30,7 +33,7 @@ class App extends React.Component {
 //intialize store
 let store = createStore(
   TwitchApp, 
-  applyMiddleware(logger)
+  applyMiddleware(thunk, logger)
   );
 
 ReactDOM.render(
