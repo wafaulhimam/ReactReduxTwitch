@@ -1,14 +1,11 @@
 import React from 'react';
 import { getState } from 'redux';
-import axios from 'axios';
-
-import FetchRequest from '../../actions/FetchRequest';
-import FetchSuccess from '../../actions/FetchSuccess';
-import FetchFailure from '../../actions/FetchFailure';
 
 import Loader from '../presentationals/Loader';
 import StreamCard from  '../presentationals/StreamCard';
 import Alert from  '../presentationals/Alert';
+
+import RequestApi from '../../actions/RequestApi';
 
 
 //Provider/Container React Component
@@ -16,34 +13,7 @@ class Streams extends React.Component {
 
   componentWillMount () {
     this.props.store.subscribe(this.forceUpdate.bind(this));
-    this.apiRequest();
-    this.dispatchFetchRequest();
-  }
-
-  apiRequest () {
-    axios.get('https://api.twitch.tv/kraken/streams/featured?&client_id=skawlpb80ixx8e9cxafxepbn66xhe1')
-      .then(response => {
-        console.log(response);
-        const streams = response.data.featured.map(function(feat) {
-          return feat.stream;
-        });
-        this.dispatchFetchSuccess(streams);
-      })
-      .catch(e => {
-        this.dispatchFetchFailure(e);
-      });
-  }
-
-  dispatchFetchRequest () {
-    this.props.store.dispatch(FetchRequest());
-  }
-
-  dispatchFetchSuccess (streams) {
-    this.props.store.dispatch(FetchSuccess(streams));
-  }
-
-  dispatchFetchFailure (error) {
-    this.props.store.dispatch(FetchFailure(error));
+    this.props.store.dispatch(RequestApi());
   }
 
   render() {

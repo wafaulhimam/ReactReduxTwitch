@@ -1,10 +1,19 @@
 //define action within an action creator
 function FetchRequest() {
+    console.log("0 seconds in");
     const FETCH_REQUEST = 'FETCH_REQUEST'
-    return {
-      type: FETCH_REQUEST,
-      status: "loading"
+    return(dispatch) => {
+        const FETCH_REQUEST_OBJ = {
+            type: FETCH_REQUEST,
+            status: "loading"
+        }
+        setTimeout(() => {
+            console.log("2 seconds in");
+            dispatch(FETCH_REQUEST_OBJ)
+        }, 2000)
     }
   }
+
+//return (dispatch) => is the same as function (dispatch)
   
-  export default FetchRequest
+export default FetchRequest
