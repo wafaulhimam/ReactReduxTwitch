@@ -16,8 +16,13 @@ import Streams from './components/containers/Streams';
 import {applyMiddleware, createStore} from 'redux';
 import logger from 'redux-logger';
 
-// Import Redux Thunk 
+// Import Redux Thunk Middleware
 import thunk from 'redux-thunk';
+
+// Import Redux Raven Middleware
+import Raven from "raven-js";
+import createRavenMiddleware from "raven-for-redux";
+
 
 //top level of React component hierarchy
 class App extends React.Component {
@@ -30,10 +35,13 @@ class App extends React.Component {
   }
 }
 
+// Redux Raven Middleware
+Raven.config('https://dd8e13da2fc548ff806939c5f510b48c@sentry.io/1418578').install();
+
 //intialize store
 let store = createStore(
   TwitchApp, 
-  applyMiddleware(thunk, logger)
+  applyMiddleware(thunk, logger, createRavenMiddleware(Raven, {}) )
   );
 
 ReactDOM.render(
