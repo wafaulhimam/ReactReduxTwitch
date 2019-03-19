@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 // Initilize Store, importing createStore from Redux
-import { createStore } from 'redux';
 
 // Import the reducer
 import TwitchApp from './reducers/TwitchApp';
@@ -12,6 +11,10 @@ import { Provider } from 'react-redux';
 
 // Import the container component
 import Streams from './components/containers/Streams';
+
+// Import Middleware
+import {applyMiddleware, createStore} from 'redux';
+import logger from 'redux-logger';
 
 //top level of React component hierarchy
 class App extends React.Component {
@@ -25,7 +28,10 @@ class App extends React.Component {
 }
 
 //intialize store
-let store = createStore(TwitchApp)
+let store = createStore(
+  TwitchApp, 
+  applyMiddleware(logger)
+  );
 
 ReactDOM.render(
   <Provider store = { store }>
